@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>Letter Me This! | Nicholas Street Games</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      height: 100%;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #0a0a0a;
+      color: #e2e2e2;
+      min-height: 100%;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    header {
+      text-align: center;
+      padding: 1.25rem 1rem 0.25rem;
+      width: 100%;
+    }
+
+    h1 {
+      font-family: 'Caveat Brush', cursive;
+      font-size: 2rem;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+
+    h1 span { color: #f5c542; }
+
+    .subtitle {
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 0.15rem;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 500px;
+      padding: 0.75rem 1rem;
+      gap: 1.25rem;
+    }
+
+    /* --- Dice Area --- */
+    .dice-area {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    .die-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .die-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #888;
+    }
+
+    .die {
+      width: 32vw;
+      height: 32vw;
+      max-width: 140px;
+      max-height: 140px;
+      min-width: 100px;
+      min-height: 100px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.15s ease;
+      position: relative;
+      -webkit-touch-callout: none;
+    }
+
+    .die:active { transform: scale(0.95); }
+
+    .die-letter {
+      background: linear-gradient(145deg, #1a1a2e, #16213e);
+      border: 3px solid #f5c542;
+      color: #f5c542;
+      font-family: 'Caveat Brush', cursive;
+      font-size: 3.5rem;
+    }
+
+    .die-number {
+      background: linear-gradient(145deg, #1a1a2e, #16213e);
+      border: 3px solid #4ecdc4;
+      color: #4ecdc4;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .die.rolling {
+      animation: roll 0.1s ease-in-out infinite;
+    }
+
+    @keyframes roll {
+      0% { transform: rotate(0deg) scale(1.05); }
+      25% { transform: rotate(5deg) scale(1.08); }
+      50% { transform: rotate(0deg) scale(1.05); }
+      75% { transform: rotate(-5deg) scale(1.08); }
+      100% { transform: rotate(0deg) scale(1.05); }
+    }
+
+    .die.landed {
+      animation: land 0.3s ease-out;
+    }
+
+    @keyframes land {
+      0% { transform: scale(1.1); }
+      50% { transform: scale(0.95); }
+      100% { transform: scale(1); }
+    }
+
+    /* Wild card star styling */
+    .die-letter .wild { color: #ff6b6b; }
+
+    /* --- Roll Button --- */
+    .roll-btn {
+      background: linear-gradient(145deg, #f5c542, #e0a800);
+      color: #0a0a0a;
+      border: none;
+      padding: 0.9rem 3rem;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 15px rgba(245, 197, 66, 0.3);
+      min-height: 50px;
+      touch-action: manipulation;
+    }
+
+    .roll-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(245, 197, 66, 0.4);
+    }
+
+    .roll-btn:active { transform: translateY(0); }
+    .roll-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* --- Result Text --- */
+    .result-text {
+      text-align: center;
+      min-height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 0.5rem;
+    }
+
+    .result-text p {
+      font-size: 1.05rem;
+      color: #ccc;
+      line-height: 1.5;
+    }
+
+    .result-text .letter-highlight { color: #f5c542; font-weight: 700; }
+    .result-text .number-highlight { color: #4ecdc4; font-weight: 700; }
+
+    /* --- Timer Section --- */
+    .timer-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid #222;
+    }
+
+    .timer-presets {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .preset-btn {
+      background: #1a1a2e;
+      color: #e2e2e2;
+      border: 2px solid #333;
+      padding: 0.6rem 1.25rem;
+      border-radius: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      min-height: 44px;
+      touch-action: manipulation;
+    }
+
+    .preset-btn:hover { border-color: #666; }
+
+    .preset-btn.active {
+      border-color: #4ecdc4;
+      color: #4ecdc4;
+    }
+
+    .timer-display {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 4.5rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 2px;
+      min-width: 200px;
+      text-align: center;
+      line-height: 1;
+      padding: 0.25rem 0;
+    }
+
+    .timer-display.warning { color: #f5c542; }
+    .timer-display.danger { color: #ff6b6b; }
+
+    .timer-display.flashing {
+      animation: flash 0.5s ease-in-out infinite;
+    }
+
+    @keyframes flash {
+      0%, 100% { opacity: 1; color: #ff6b6b; }
+      50% { opacity: 0.2; color: #ff6b6b; }
+    }
+
+    .timer-controls {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .timer-btn {
+      border: none;
+      padding: 0.7rem 2rem;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s, opacity 0.15s;
+      min-height: 48px;
+      touch-action: manipulation;
+    }
+
+    .timer-btn:active { transform: scale(0.95); }
+
+    .timer-btn.start {
+      background: #4ecdc4;
+      color: #0a0a0a;
+    }
+
+    .timer-btn.stop {
+      background: #ff6b6b;
+      color: #fff;
+    }
+
+    .timer-btn.reset {
+      background: #333;
+      color: #e2e2e2;
+    }
+
+    footer {
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.7rem;
+      color: #555;
+    }
+
+    footer a { color: #888; text-decoration: none; }
+    footer a:hover { color: #f5c542; }
+
+    /* --- Small phones (under 380px wide) --- */
+    @media (max-width: 380px) {
+      h1 { font-size: 1.75rem; }
+      .die { min-width: 85px; min-height: 85px; border-radius: 16px; }
+      .die-letter { font-size: 2.75rem; }
+      .die-number { font-size: 2.25rem; }
+      .timer-display { font-size: 3.5rem; min-width: 160px; }
+      .dice-area { gap: 1rem; }
+      .roll-btn { padding: 0.8rem 2rem; font-size: 1rem; }
+    }
+
+    /* --- Tablets and larger phones in landscape --- */
+    @media (min-width: 600px) {
+      header { padding: 2rem 1rem 0.5rem; }
+      h1 { font-size: 3rem; }
+      .subtitle { font-size: 0.9rem; }
+      main { gap: 1.75rem; padding: 1.5rem; }
+      .die { max-width: 160px; max-height: 160px; border-radius: 24px; }
+      .die-letter { font-size: 4rem; }
+      .die-number { font-size: 3.5rem; }
+      .dice-area { gap: 2.5rem; }
+      .roll-btn { padding: 1rem 3.5rem; font-size: 1.2rem; }
+      .result-text p { font-size: 1.15rem; }
+      .timer-display { font-size: 5.5rem; min-width: 240px; }
+      .preset-btn { padding: 0.7rem 1.5rem; font-size: 1rem; }
+      .timer-btn { padding: 0.8rem 2.5rem; font-size: 1.05rem; }
+    }
+
+    /* --- Landscape on phones: tighten vertical spacing --- */
+    @media (max-height: 500px) and (orientation: landscape) {
+      header { padding: 0.5rem 1rem 0.15rem; }
+      h1 { font-size: 1.5rem; }
+      .subtitle { display: none; }
+      main { gap: 0.5rem; padding: 0.5rem 1rem; }
+      .die-label { display: none; }
+      .die { min-width: 70px; min-height: 70px; max-width: 80px; max-height: 80px; border-radius: 14px; }
+      .die-letter { font-size: 2.25rem; }
+      .die-number { font-size: 2rem; }
+      .roll-btn { padding: 0.5rem 2rem; font-size: 0.9rem; min-height: 40px; }
+      .result-text { min-height: 1.5rem; }
+      .result-text p { font-size: 0.9rem; }
+      .timer-section { gap: 0.35rem; padding-top: 0.35rem; }
+      .timer-display { font-size: 2.75rem; padding: 0; }
+      .timer-btn { padding: 0.4rem 1.5rem; min-height: 38px; font-size: 0.85rem; }
+      .preset-btn { padding: 0.35rem 0.85rem; min-height: 36px; font-size: 0.8rem; }
+      footer { padding: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Letter Me <span>This!</span></h1>
+    <p class="subtitle">Nicholas Street Games</p>
+  </header>
+
+  <main>
+    <div class="dice-area">
+      <div class="die-container">
+        <span class="die-label">Letter</span>
+        <div class="die die-letter" id="letterDie">?</div>
+      </div>
+      <div class="die-container">
+        <span class="die-label">Count</span>
+        <div class="die die-number" id="numberDie">?</div>
+      </div>
+    </div>
+
+    <button class="roll-btn" id="rollBtn">Roll Dice</button>
+
+    <div class="result-text" id="resultText"></div>
+
+    <div class="timer-section">
+      <div class="timer-presets">
+        <button class="preset-btn" data-seconds="90">1:30</button>
+        <button class="preset-btn active" data-seconds="120">2:00</button>
+        <button class="preset-btn" data-seconds="180">3:00</button>
+      </div>
+
+      <div class="timer-display" id="timerDisplay">2:00</div>
+
+      <div class="timer-controls">
+        <button class="timer-btn start" id="startBtn">Start</button>
+        <button class="timer-btn reset" id="resetBtn">Reset</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <a href="https://nicholasstreetgames.com">nicholasstreetgames.com</a>
+  </footer>
+
+  <script>
+    // --- 20-sided letter die: 18 most common letters + 2 wilds ---
+    const LETTER_FACES = [
+      'E','T','A','O','I','N','S','H','R','D',
+      'L','C','U','M','W','F','G','Y','★','★'
+    ];
+
+    // --- 6-sided number die: two 4s, two 5s, two 6s ---
+    const NUMBER_FACES = [4, 4, 5, 5, 6, 6];
+
+    const letterDie = document.getElementById('letterDie');
+    const numberDie = document.getElementById('numberDie');
+    const rollBtn = document.getElementById('rollBtn');
+    const resultText = document.getElementById('resultText');
+    const timerDisplay = document.getElementById('timerDisplay');
+    const startBtn = document.getElementById('startBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const presetBtns = document.querySelectorAll('.preset-btn');
+
+    let isRolling = false;
+    let timerInterval = null;
+    let timerSeconds = 120;
+    let timerRunning = false;
+    let selectedPreset = 120;
+
+    // --- Dice Rolling ---
+    function rollDice() {
+      if (isRolling) return;
+      isRolling = true;
+      rollBtn.disabled = true;
+
+      // Stop any running timer and reset
+      stopTimer();
+      resetTimer();
+
+      letterDie.classList.remove('landed');
+      numberDie.classList.remove('landed');
+      letterDie.classList.add('rolling');
+      numberDie.classList.add('rolling');
+      resultText.innerHTML = '';
+
+      // Rapidly cycle through faces during animation
+      const rollDuration = 1200;
+      const cycleSpeed = 60;
+      let elapsed = 0;
+
+      const cycleInterval = setInterval(() => {
+        elapsed += cycleSpeed;
+        letterDie.textContent = LETTER_FACES[Math.floor(Math.random() * LETTER_FACES.length)];
+        numberDie.textContent = NUMBER_FACES[Math.floor(Math.random() * NUMBER_FACES.length)];
+
+        if (elapsed >= rollDuration) {
+          clearInterval(cycleInterval);
+
+          // Pick final results
+          const letter = LETTER_FACES[Math.floor(Math.random() * LETTER_FACES.length)];
+          const number = NUMBER_FACES[Math.floor(Math.random() * NUMBER_FACES.length)];
+
+          letterDie.classList.remove('rolling');
+          numberDie.classList.remove('rolling');
+          letterDie.classList.add('landed');
+          numberDie.classList.add('landed');
+
+          if (letter === '★') {
+            letterDie.innerHTML = '<span class="wild">★</span>';
+          } else {
+            letterDie.textContent = letter;
+          }
+          numberDie.textContent = number;
+
+          // Show result message
+          if (letter === '★') {
+            resultText.innerHTML = `<p>Wild! Pick <em>any</em> letter &mdash; write <span class="number-highlight">${number}</span> words</p>`;
+          } else {
+            resultText.innerHTML = `<p>Write <span class="number-highlight">${number}</span> words starting with <span class="letter-highlight">${letter}</span></p>`;
+          }
+
+          isRolling = false;
+          rollBtn.disabled = false;
+        }
+      }, cycleSpeed);
+    }
+
+    rollBtn.addEventListener('click', rollDice);
+
+    // Also allow tapping either die to roll
+    letterDie.addEventListener('click', rollDice);
+    numberDie.addEventListener('click', rollDice);
+
+    // --- Timer ---
+    function formatTime(secs) {
+      const m = Math.floor(secs / 60);
+      const s = secs % 60;
+      return `${m}:${s.toString().padStart(2, '0')}`;
+    }
+
+    function updateTimerDisplay() {
+      timerDisplay.textContent = formatTime(timerSeconds);
+
+      timerDisplay.classList.remove('warning', 'danger', 'flashing');
+      if (timerSeconds <= 0) {
+        timerDisplay.classList.add('flashing');
+      } else if (timerSeconds <= 10) {
+        timerDisplay.classList.add('danger');
+      } else if (timerSeconds <= 30) {
+        timerDisplay.classList.add('warning');
+      }
+    }
+
+    function startTimer() {
+      if (timerRunning) {
+        // Pause
+        stopTimer();
+        return;
+      }
+
+      if (timerSeconds <= 0) {
+        resetTimer();
+      }
+
+      timerRunning = true;
+      startBtn.textContent = 'Pause';
+      startBtn.classList.remove('start');
+      startBtn.classList.add('stop');
+
+      timerInterval = setInterval(() => {
+        timerSeconds--;
+        updateTimerDisplay();
+
+        if (timerSeconds <= 0) {
+          stopTimer();
+          timerDisplay.classList.add('flashing');
+          startBtn.textContent = 'Start';
+          startBtn.classList.remove('stop');
+          startBtn.classList.add('start');
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      timerRunning = false;
+      startBtn.textContent = 'Start';
+      startBtn.classList.remove('stop');
+      startBtn.classList.add('start');
+    }
+
+    function resetTimer() {
+      stopTimer();
+      timerSeconds = selectedPreset;
+      timerDisplay.classList.remove('flashing', 'warning', 'danger');
+      updateTimerDisplay();
+    }
+
+    startBtn.addEventListener('click', startTimer);
+    resetBtn.addEventListener('click', resetTimer);
+
+    // Preset buttons
+    presetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        presetBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedPreset = parseInt(btn.dataset.seconds, 10);
+        resetTimer();
+      });
+    });
+
+    // Initialize display
+    updateTimerDisplay();
+  </script>
+
+</body>
+</html>
