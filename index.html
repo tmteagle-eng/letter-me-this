@@ -5,12 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#0a0a0a">
+  <meta name="theme-color" content="#FBFAF5">
   <title>Letter Me This! | Nicholas Street Games</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --ground: #FBFAF5;
+      --card: #FFFFFF;
+      --ink: #1D2624;
+      --ink-soft: #52605C;
+      --ink-faint: #8A968F;
+      --hair: #E7E4DA;
+      --teal: #20B2AA;
+      --teal-ink: #0E6A64;
+      --mint: #E7F4EC;
+      --yellow: #F5C518;
+      --amber-ink: #B8720A;
+      --coral: #E85D3D;
+      --coral-ink: #B8402A;
+      --green: #3A7D44;
+      --display: 'Baloo 2', ui-rounded, 'Segoe UI Rounded', system-ui, sans-serif;
+      --body: 'Nunito', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html {
@@ -19,9 +38,12 @@
     }
 
     body {
-      font-family: 'Montserrat', sans-serif;
-      background: #0a0a0a;
-      color: #e2e2e2;
+      font-family: var(--body);
+      background:
+        radial-gradient(60% 55% at 14% 6%, rgba(32,178,170,0.14) 0%, transparent 60%),
+        radial-gradient(55% 50% at 90% 96%, rgba(245,197,24,0.18) 0%, transparent 60%),
+        var(--ground);
+      color: var(--ink);
       min-height: 100%;
       min-height: 100dvh;
       display: flex;
@@ -38,18 +60,22 @@
     }
 
     h1 {
-      font-family: 'Caveat Brush', cursive;
-      font-size: 2rem;
-      color: #fff;
-      letter-spacing: 1px;
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 2.1rem;
+      color: var(--ink);
+      letter-spacing: 0;
     }
 
-    h1 span { color: #f5c542; }
+    h1 span { color: var(--coral); }
 
     .subtitle {
+      font-family: var(--display);
+      font-weight: 600;
       font-size: 0.75rem;
-      color: #888;
+      color: var(--ink-faint);
       margin-top: 0.15rem;
+      letter-spacing: 0.05em;
     }
 
     main {
@@ -81,11 +107,12 @@
     }
 
     .die-label {
+      font-family: var(--display);
       font-size: 0.7rem;
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      color: #888;
+      color: var(--ink-faint);
     }
 
     .die {
@@ -111,18 +138,22 @@
     .die:active { transform: scale(0.95); }
 
     .die-letter {
-      background: linear-gradient(145deg, #1a1a2e, #16213e);
-      border: 3px solid #f5c542;
-      color: #f5c542;
-      font-family: 'Caveat Brush', cursive;
+      background: var(--card);
+      border: 3px solid var(--teal);
+      color: var(--teal-ink);
+      font-family: var(--display);
+      font-weight: 800;
       font-size: 3.5rem;
+      box-shadow: 0 10px 26px rgba(20,40,35,0.10);
     }
 
     .die-number {
-      background: linear-gradient(145deg, #1a1a2e, #16213e);
-      border: 3px solid #4ecdc4;
-      color: #4ecdc4;
-      font-family: 'Montserrat', sans-serif;
+      background: var(--card);
+      border: 3px solid var(--coral);
+      color: var(--coral-ink);
+      font-family: var(--display);
+      font-weight: 800;
+      box-shadow: 0 10px 26px rgba(20,40,35,0.10);
     }
 
     .die.rolling {
@@ -148,30 +179,30 @@
     }
 
     /* Wild card star styling */
-    .die-letter .wild { color: #ff6b6b; }
+    .die-letter .wild { color: var(--coral); }
 
     /* --- Roll Button --- */
     .roll-btn {
-      background: linear-gradient(145deg, #f5c542, #e0a800);
-      color: #0a0a0a;
+      background: var(--coral);
+      color: #fff;
       border: none;
       padding: 0.9rem 3rem;
       border-radius: 50px;
-      font-family: 'Montserrat', sans-serif;
+      font-family: var(--display);
       font-size: 1.1rem;
       font-weight: 700;
       cursor: pointer;
       text-transform: uppercase;
       letter-spacing: 2px;
       transition: transform 0.15s, box-shadow 0.15s;
-      box-shadow: 0 4px 15px rgba(245, 197, 66, 0.3);
+      box-shadow: 0 6px 18px rgba(232, 93, 61, 0.32);
       min-height: 50px;
       touch-action: manipulation;
     }
 
     .roll-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(245, 197, 66, 0.4);
+      box-shadow: 0 10px 24px rgba(232, 93, 61, 0.42);
     }
 
     .roll-btn:active { transform: translateY(0); }
@@ -188,13 +219,14 @@
     }
 
     .result-text p {
+      font-family: var(--body);
       font-size: 1.05rem;
-      color: #ccc;
+      color: var(--ink-soft);
       line-height: 1.5;
     }
 
-    .result-text .letter-highlight { color: #f5c542; font-weight: 700; }
-    .result-text .number-highlight { color: #4ecdc4; font-weight: 700; }
+    .result-text .letter-highlight { color: var(--teal-ink); font-weight: 800; }
+    .result-text .number-highlight { color: var(--coral-ink); font-weight: 800; }
 
     /* --- Timer Section --- */
     .timer-section {
@@ -204,7 +236,7 @@
       align-items: center;
       gap: 0.75rem;
       padding-top: 0.75rem;
-      border-top: 1px solid #222;
+      border-top: 1px solid var(--hair);
     }
 
     .timer-presets {
@@ -213,32 +245,33 @@
     }
 
     .preset-btn {
-      background: #1a1a2e;
-      color: #e2e2e2;
-      border: 2px solid #333;
+      background: var(--card);
+      color: var(--ink-soft);
+      border: 2px solid var(--hair);
       padding: 0.6rem 1.25rem;
-      border-radius: 10px;
-      font-family: 'Montserrat', sans-serif;
+      border-radius: 12px;
+      font-family: var(--display);
       font-size: 0.9rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
-      transition: border-color 0.2s, color 0.2s;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
       min-height: 44px;
       touch-action: manipulation;
     }
 
-    .preset-btn:hover { border-color: #666; }
+    .preset-btn:hover { border-color: var(--teal); }
 
     .preset-btn.active {
-      border-color: #4ecdc4;
-      color: #4ecdc4;
+      border-color: var(--teal);
+      color: var(--teal-ink);
+      background: var(--mint);
     }
 
     .timer-display {
-      font-family: 'Montserrat', sans-serif;
+      font-family: var(--display);
       font-size: 4.5rem;
-      font-weight: 700;
-      color: #fff;
+      font-weight: 800;
+      color: var(--ink);
       letter-spacing: 2px;
       min-width: 200px;
       text-align: center;
@@ -246,16 +279,16 @@
       padding: 0.25rem 0;
     }
 
-    .timer-display.warning { color: #f5c542; }
-    .timer-display.danger { color: #ff6b6b; }
+    .timer-display.warning { color: var(--amber-ink); }
+    .timer-display.danger { color: var(--coral); }
 
     .timer-display.flashing {
       animation: flash 0.5s ease-in-out infinite;
     }
 
     @keyframes flash {
-      0%, 100% { opacity: 1; color: #ff6b6b; }
-      50% { opacity: 0.2; color: #ff6b6b; }
+      0%, 100% { opacity: 1; color: var(--coral); }
+      50% { opacity: 0.2; color: var(--coral); }
     }
 
     .timer-controls {
@@ -267,9 +300,9 @@
       border: none;
       padding: 0.7rem 2rem;
       border-radius: 50px;
-      font-family: 'Montserrat', sans-serif;
+      font-family: var(--display);
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       transition: transform 0.15s, opacity 0.15s;
       min-height: 48px;
@@ -279,33 +312,34 @@
     .timer-btn:active { transform: scale(0.95); }
 
     .timer-btn.start {
-      background: #4ecdc4;
-      color: #0a0a0a;
+      background: var(--green);
+      color: #fff;
     }
 
     .timer-btn.stop {
-      background: #ff6b6b;
+      background: var(--coral);
       color: #fff;
     }
 
     .timer-btn.reset {
-      background: #333;
-      color: #e2e2e2;
+      background: var(--hair);
+      color: var(--ink-soft);
     }
 
     footer {
       padding: 1rem;
       text-align: center;
+      font-family: var(--body);
       font-size: 0.7rem;
-      color: #555;
+      color: var(--ink-faint);
     }
 
-    footer a { color: #888; text-decoration: none; }
-    footer a:hover { color: #f5c542; }
+    footer a { color: var(--teal-ink); text-decoration: none; font-weight: 700; }
+    footer a:hover { color: var(--coral); }
 
     /* --- Small phones (under 380px wide) --- */
     @media (max-width: 380px) {
-      h1 { font-size: 1.75rem; }
+      h1 { font-size: 1.85rem; }
       .die { min-width: 85px; min-height: 85px; border-radius: 16px; }
       .die-letter { font-size: 2.75rem; }
       .die-number { font-size: 2.25rem; }
