@@ -178,8 +178,6 @@
       100% { transform: scale(1); }
     }
 
-    /* Wild card star styling */
-    .die-letter .wild { color: var(--coral); }
 
     /* --- Roll Button --- */
     .roll-btn {
@@ -430,14 +428,14 @@
   </footer>
 
   <script>
-    // --- 20-sided letter die: 18 most common letters + 2 wilds ---
+    // --- 20-sided letter die: all letters except Q, U, V, X, Y, Z ---
     const LETTER_FACES = [
-      'E','T','A','O','I','N','S','H','R','D',
-      'L','C','U','M','W','F','G','Y','★','★'
+      'A','B','C','D','E','F','G','H','I','J',
+      'K','L','M','N','O','P','R','S','T','W'
     ];
 
-    // --- 6-sided number die: two 4s, two 5s, two 6s ---
-    const NUMBER_FACES = [4, 4, 5, 5, 6, 6];
+    // --- Standard 6-sided number die: 1 through 6 ---
+    const NUMBER_FACES = [1, 2, 3, 4, 5, 6];
 
     const letterDie = document.getElementById('letterDie');
     const numberDie = document.getElementById('numberDie');
@@ -492,19 +490,11 @@
           letterDie.classList.add('landed');
           numberDie.classList.add('landed');
 
-          if (letter === '★') {
-            letterDie.innerHTML = '<span class="wild">★</span>';
-          } else {
-            letterDie.textContent = letter;
-          }
+          letterDie.textContent = letter;
           numberDie.textContent = number;
 
           // Show result message
-          if (letter === '★') {
-            resultText.innerHTML = `<p>Wild! Pick <em>any</em> letter &mdash; write <span class="number-highlight">${number}</span> words</p>`;
-          } else {
-            resultText.innerHTML = `<p>Write <span class="number-highlight">${number}</span> words starting with <span class="letter-highlight">${letter}</span></p>`;
-          }
+          resultText.innerHTML = `<p>Play <span class="number-highlight">${number}</span> words starting with <span class="letter-highlight">${letter}</span></p>`;
 
           isRolling = false;
           rollBtn.disabled = false;
