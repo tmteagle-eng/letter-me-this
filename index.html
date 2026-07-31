@@ -409,12 +409,12 @@
 
     <div class="timer-section">
       <div class="timer-presets">
-        <button class="preset-btn" data-seconds="90">1:30</button>
-        <button class="preset-btn active" data-seconds="120">2:00</button>
+        <button class="preset-btn active" data-seconds="90">1:30</button>
+        <button class="preset-btn" data-seconds="120">2:00</button>
         <button class="preset-btn" data-seconds="180">3:00</button>
       </div>
 
-      <div class="timer-display" id="timerDisplay">2:00</div>
+      <div class="timer-display" id="timerDisplay">1:30</div>
 
       <div class="timer-controls">
         <button class="timer-btn start" id="startBtn">Start</button>
@@ -448,9 +448,9 @@
 
     let isRolling = false;
     let timerInterval = null;
-    let timerSeconds = 120;
+    let timerSeconds = 90;
     let timerRunning = false;
-    let selectedPreset = 120;
+    let selectedPreset = 90;
 
     // --- Dice Rolling ---
     function rollDice() {
