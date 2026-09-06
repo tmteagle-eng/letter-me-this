@@ -240,6 +240,8 @@
     .timer-presets {
       display: flex;
       gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .preset-btn {
@@ -409,8 +411,11 @@
 
     <div class="timer-section">
       <div class="timer-presets">
+        <button class="preset-btn" data-seconds="30">0:30</button>
+        <button class="preset-btn" data-seconds="60">1:00</button>
         <button class="preset-btn active" data-seconds="90">1:30</button>
         <button class="preset-btn" data-seconds="120">2:00</button>
+        <button class="preset-btn" data-seconds="150">2:30</button>
         <button class="preset-btn" data-seconds="180">3:00</button>
       </div>
 
